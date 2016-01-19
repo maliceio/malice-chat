@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"time"
 
@@ -53,6 +55,20 @@ var (
 func main() {
 	r := gin.New()
 
+	response, err := http.Get("http://192.168.99.100:9200")
+	if err != nil {
+		fmt.Printf("%s", err)
+		os.Exit(1)
+	} else {
+		defer response.Body.Close()
+		contents, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			fmt.Printf("%s", err)
+			os.Exit(1)
+		}
+		fmt.Printf("%s\n", string(contents))
+	}
+
 	// Add a ginrus middleware, which:
 	//   - Logs all requests, like a combined access and error log.
 	//   - Logs to stdout.
@@ -64,22 +80,25 @@ func main() {
 	//   - Logs to stderr instead of stdout.
 	//   - Local time zone instead of UTC.
 	logger := logrus.New()
-	client, err := elastic.NewClient()
+	client, err := elastic.NewClient(
+		elastic.SetURL("http://192.168.99.100:9200"),
+		elastic.SetMaxRetries(10),
+		elastic.SetHealthcheck(false),
+		elastic.SetSniff(false),
+	)
 	if err != nil {
-		// Handle error
 		panic(err)
 	}
 	// Getting the ES version number is quite common, so there's a shortcut
-	esversion, err := client.ElasticsearchVersion("http://127.0.0.1:9200")
+	esversion, err := client.ElasticsearchVersion("http://192.168.99.100:9200")
 	if err != nil {
-		// Handle error
 		panic(err)
 	}
-	fmt.Printf("Elasticsearch version %s", esversion)
+	fmt.Printf("Elasticsearch version %s\n", esversion)
 	if err != nil {
 		logger.Panic(err)
 	}
-	hook, _ := elogrus.NewElasticHook(client, "192.168.99.100", logrus.DebugLevel, "mylog")
+	hook, _ := elogrus.NewElasticHook(client, "malicehost", logrus.DebugLevel, "mylog")
 	logger.Hooks.Add(hook)
 	logger.WithFields(logrus.Fields{
 		"name": "joe",
