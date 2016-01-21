@@ -100,10 +100,10 @@ func main() {
 	}
 	hook, _ := elogrus.NewElasticHook(client, "malicehost", logrus.DebugLevel, "mylog")
 	logger.Hooks.Add(hook)
-	logger.WithFields(logrus.Fields{
-		"name": "joe",
-		"age":  42,
-	}).Error("Hello world!")
+	// logger.WithFields(logrus.Fields{
+	// 	"name": "joe",
+	// 	"age":  42,
+	// }).Error("Hello world!")
 	logger.Level = logrus.InfoLevel
 	logger.Out = os.Stderr
 	r.Use(ginrus.Ginrus(logger, time.RFC3339, false))
