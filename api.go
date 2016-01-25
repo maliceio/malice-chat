@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"fmt"
@@ -52,7 +52,7 @@ var (
 // 	r.Run("localhost:8080")
 // }
 
-func main() {
+func Run() {
 	r := gin.New()
 
 	response, err := http.Get("http://192.168.99.100:9200")
