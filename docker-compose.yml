@@ -1,11 +1,11 @@
 api:
   build: api/.
   links:
-    - db
+    - rethinkdb
 
-db:
+rethinkdb:
   image: rethinkdb
   ports:
-    - "28015:28015"
+    - "28015"
   volumes:
     - ~/.malice/db:/data

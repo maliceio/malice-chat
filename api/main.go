@@ -3,14 +3,25 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	r "github.com/dancannon/gorethink"
 )
 
+// Version stores the plugin's version
+var Version string
+
+// BuildTime stores the plugin's build time
+var BuildTime string
+
 func main() {
 	session, err := r.Connect(r.ConnectOpts{
-		Address:  "rethinkdb:28015",
-		Database: "malice",
+		Address:       "retrhinkdb:28015",
+		Timeout:       1 * time.Second,
+		MaxIdle:       3,
+		MaxOpen:       10,
+		DiscoverHosts: true,
+		Database:      "malice",
 	})
 
 	if err != nil {
