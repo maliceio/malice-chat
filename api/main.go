@@ -17,17 +17,34 @@ var Version string
 var BuildTime string
 
 func setUpRethinkDB(session *r.Session) error {
+	// Create malice DB
 	resp, err := r.DBCreate("malice").RunWrite(session)
 	if err != nil {
 		fmt.Print(err)
+	} else {
+		fmt.Printf("%d DB created", resp.DBsCreated)
 	}
-	fmt.Printf("%d DB created", resp.DBsCreated)
-	r.TableCreate("channel", r.TableCreateOpts{PrimaryKey: "channelId"})
-	fmt.Printf("%d Table created", resp.DBsCreated)
-	r.TableCreate("message")
-	fmt.Printf("%d Table created", resp.DBsCreated)
-	r.TableCreate("user")
-	fmt.Printf("%d Table created", resp.DBsCreated)
+	// Create message Table
+	resp, err = r.DB("malice").TableCreate("channel", r.TableCreateOpts{PrimaryKey: "channelId"}).RunWrite(session)
+	if err != nil {
+		fmt.Print(err)
+	} else {
+		fmt.Printf("%d Table created", resp.TablesCreated)
+	}
+	// Create message Table
+	resp, err = r.DB("malice").TableCreate("message").RunWrite(session)
+	if err != nil {
+		fmt.Print(err)
+	} else {
+		fmt.Printf("%d Table created", resp.TablesCreated)
+	}
+	// Create user Table
+	resp, err = r.DB("malice").TableCreate("user").RunWrite(session)
+	if err != nil {
+		fmt.Print(err)
+	} else {
+		fmt.Printf("%d Table created", resp.TablesCreated)
+	}
 
 	session.Use("malice")
 
