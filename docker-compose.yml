@@ -1,11 +1,23 @@
-api:
-  build: api/.
-  links:
-    - rethinkdb
+version: "2"
 
-rethinkdb:
-  image: rethinkdb
-  ports:
-    - "28015"
-  volumes:
-    - ~/.malice/db:/data
+services:
+  api:
+    build: api/.
+    ports:
+      - "4000:4000"
+    links:
+      - rethinkdb
+    networks:
+      - malice
+  rethinkdb:
+    image: rethinkdb
+    ports:
+      - "28015:28015"
+      - "8081:8080"
+    volumes:
+      - ~/.malice/db:/data
+    networks:
+      - malice
+networks:
+  malice:
+    driver: bridge
