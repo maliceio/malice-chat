@@ -1,8 +1,8 @@
 import {EventEmitter} from 'events';
 
 class Socket {
-    // constructor(ws = new WebSocket('ws://192.168.99.100:4000'), ee = new EventEmitter()) {
-    constructor(ws = new WebSocket('ws://localhost:4000'), ee = new EventEmitter()) {
+    constructor(ws = new WebSocket('ws://192.168.99.100:4000'), ee = new EventEmitter()) {
+    // constructor(ws = new WebSocket('ws://localhost:4000'), ee = new EventEmitter()) {
         this.ws = ws;
         this.ee = ee;
         ws.onmessage = this.message.bind(this);

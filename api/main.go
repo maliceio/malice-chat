@@ -28,12 +28,6 @@ func setUpRethinkDB(session *r.Session) error {
 	if err != nil {
 		fmt.Print(err)
 	} else {
-		// resp, err = r.DB("malice").Table("channel").IndexCreate("name", r.IndexCreateOpts{
-		// 	Multi: true,
-		// }).RunWrite(session)
-		// if err != nil {
-		// 	fmt.Print(err)
-		// }
 		fmt.Printf("%d Table created\n", resp.TablesCreated)
 	}
 	// Create message Table
@@ -75,9 +69,9 @@ func main() {
 	// }
 	// rethinkAddr := addrs[0] + ":28015"
 	session, err := r.Connect(r.ConnectOpts{
-		Address: "localhost:28015",
+		// Address: "localhost:28015",
 		// Address: "192.168.99.100:28015",
-		// Address: "rethinkdb:28015",
+		Address: "rethinkdb:28015",
 		// Address: rethinkAddr,
 		Timeout:  5 * time.Second,
 		Database: "malice",
@@ -87,10 +81,10 @@ func main() {
 		log.Panic(err.Error())
 	}
 
-	// err = setUpRethinkDB(session)
-	// if err != nil {
-	// 	fmt.Print(err)
-	// }
+	err = setUpRethinkDB(session)
+	if err != nil {
+		fmt.Print(err)
+	}
 
 	router := NewRouter(session)
 
