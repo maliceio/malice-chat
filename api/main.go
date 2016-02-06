@@ -71,7 +71,7 @@ func main() {
 	session, err := r.Connect(r.ConnectOpts{
 		// Address: "localhost:28015",
 		// Address: "192.168.99.100:28015",
-		Address: "rethinkdb:28015",
+		Address: "db:28015",
 		// Address: rethinkAddr,
 		Timeout:  5 * time.Second,
 		Database: "malice",

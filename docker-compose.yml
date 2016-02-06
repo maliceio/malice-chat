@@ -3,13 +3,15 @@ version: "2"
 services:
   api:
     build: api/.
+    depends_on:
+      - db
     ports:
       - "4000:4000"
     links:
-      - rethinkdb
+      - db
     networks:
       - malice
-  rethinkdb:
+  db:
     image: rethinkdb
     ports:
       - "28015:28015"
