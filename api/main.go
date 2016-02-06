@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"net"
 	"net/http"
 	"time"
 
@@ -22,28 +21,46 @@ func setUpRethinkDB(session *r.Session) error {
 	if err != nil {
 		fmt.Print(err)
 	} else {
-		fmt.Printf("%d DB created", resp.DBsCreated)
+		fmt.Printf("%d DB created\n", resp.DBsCreated)
 	}
-	// Create message Table
-	resp, err = r.DB("malice").TableCreate("channel", r.TableCreateOpts{PrimaryKey: "channelId"}).RunWrite(session)
+	// Create channel Table
+	resp, err = r.DB("malice").TableCreate("channel").RunWrite(session)
 	if err != nil {
 		fmt.Print(err)
 	} else {
-		fmt.Printf("%d Table created", resp.TablesCreated)
+		// resp, err = r.DB("malice").Table("channel").IndexCreate("name", r.IndexCreateOpts{
+		// 	Multi: true,
+		// }).RunWrite(session)
+		// if err != nil {
+		// 	fmt.Print(err)
+		// }
+		fmt.Printf("%d Table created\n", resp.TablesCreated)
 	}
 	// Create message Table
 	resp, err = r.DB("malice").TableCreate("message").RunWrite(session)
 	if err != nil {
 		fmt.Print(err)
 	} else {
-		fmt.Printf("%d Table created", resp.TablesCreated)
+		resp, err = r.DB("malice").Table("message").IndexCreate("createdAt", r.IndexCreateOpts{
+			Multi: true,
+		}).RunWrite(session)
+		if err != nil {
+			fmt.Print(err)
+		}
+		resp, err = r.DB("malice").Table("message").IndexCreate("channelId", r.IndexCreateOpts{
+			Multi: true,
+		}).RunWrite(session)
+		if err != nil {
+			fmt.Print(err)
+		}
+		fmt.Printf("%d Table created\n", resp.TablesCreated)
 	}
 	// Create user Table
 	resp, err = r.DB("malice").TableCreate("user").RunWrite(session)
 	if err != nil {
 		fmt.Print(err)
 	} else {
-		fmt.Printf("%d Table created", resp.TablesCreated)
+		fmt.Printf("%d Table created\n", resp.TablesCreated)
 	}
 
 	session.Use("malice")
@@ -52,24 +69,28 @@ func setUpRethinkDB(session *r.Session) error {
 }
 
 func main() {
-	addrs, err := net.LookupHost("rethinkdb")
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	rethinkAddr := addrs[0] + ":28015"
+	// addrs, err := net.LookupHost("rethinkdb")
+	// if err != nil {
+	// 	log.Panic(err.Error())
+	// }
+	// rethinkAddr := addrs[0] + ":28015"
 	session, err := r.Connect(r.ConnectOpts{
-		Address: rethinkAddr,
-		Timeout: 5 * time.Second,
+		Address: "localhost:28015",
+		// Address: "192.168.99.100:28015",
+		// Address: "rethinkdb:28015",
+		// Address: rethinkAddr,
+		Timeout:  5 * time.Second,
+		Database: "malice",
 	})
 
 	if err != nil {
 		log.Panic(err.Error())
 	}
 
-	err = setUpRethinkDB(session)
-	if err != nil {
-		fmt.Print(err)
-	}
+	// err = setUpRethinkDB(session)
+	// if err != nil {
+	// 	fmt.Print(err)
+	// }
 
 	router := NewRouter(session)
 

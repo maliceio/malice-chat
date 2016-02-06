@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import ChannelSection from './channels/ChannelSection.jsx';
 import UserSection from './users/UserSection.jsx';
 import MessageSection from './messages/MessageSection.jsx';
-import Socker from '../socket.js';
+import Socket from '../socket.js';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             channels: [],
-            // add initial state values
             users: [],
             messages: [],
             activeChannel: {},
@@ -18,8 +17,8 @@ class App extends Component {
     }
 
     componentDidMount() {
-        let ws = new WebSocket('ws://192.168.99.100:4000');
-        let socket = this.socket = new Socker(ws);
+        let ws = new WebSocket('ws://localhost:4000');
+        let socket = this.socket = new Socket(ws);
         socket.on('connect', this.onConnect.bind(this));
         socket.on('disconnect', this.onDisconnect.bind(this));
         socket.on('channel add', this.onAddChannel.bind(this));
@@ -27,13 +26,12 @@ class App extends Component {
         socket.on('user edit', this.onEditUser.bind(this));
         socket.on('user remove', this.onRemoveUser.bind(this));
         socket.on('message add', this.onMessageAdd.bind(this));
-
     }
 
     onMessageAdd(message) {
         let {messages} = this.state;
         messages.push(message);
-        this.setState({users});
+        this.setState({messages});
     }
 
     onRemoveUser(removeUser) {
@@ -63,8 +61,8 @@ class App extends Component {
 
     onConnect() {
         this.setState({connected: true});
-        this.socket.emit('channel subscribe', {name});
-        this.socket.emit('user subscribe', {name});
+        this.socket.emit('channel subscribe');
+        this.socket.emit('user subscribe');
     }
 
     onDisconnect() {
@@ -83,10 +81,10 @@ class App extends Component {
 
     setChannel(activeChannel) {
         this.setState({activeChannel});
-        this.socket.emit('channel unsubscribe', {name});
+        this.socket.emit('message unsubscribe');
         this.setState({messages: []});
         this.socket.emit('message subscribe',
-            {channelID: activeChannel.id});
+            {channelId: activeChannel.id});
     }
 
     setUserName(name) {
@@ -95,12 +93,8 @@ class App extends Component {
 
     addMessage(body) {
         let {activeChannel} = this.state;
-        this.socket.emit('add message',
-            {
-                channelID: activeChannel.id,
-                body
-            }
-        );
+        this.socket.emit('message add',
+            {channelId: activeChannel.id, body});
     }
 
     render() {

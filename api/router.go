@@ -48,5 +48,4 @@ func (e *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer client.Close()
 	go client.Write()
 	client.Read()
-
 }
