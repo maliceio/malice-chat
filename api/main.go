@@ -63,16 +63,11 @@ func setUpRethinkDB(session *r.Session) error {
 }
 
 func main() {
-	// addrs, err := net.LookupHost("rethinkdb")
-	// if err != nil {
-	// 	log.Panic(err.Error())
-	// }
-	// rethinkAddr := addrs[0] + ":28015"
+	// Give RethinkDB time to start
+	time.Sleep(2 * time.Second)
+
 	session, err := r.Connect(r.ConnectOpts{
-		// Address: "localhost:28015",
-		// Address: "192.168.99.100:28015",
-		Address: "db:28015",
-		// Address: rethinkAddr,
+		Address:  "db:28015",
 		Timeout:  5 * time.Second,
 		Database: "malice",
 	})
