@@ -1,11 +1,12 @@
 import {EventEmitter} from 'events';
 
 class Socket {
-    constructor(ws = new WebSocket('ws://192.168.99.100:4000'), ee = new EventEmitter()) {
+    constructor(ws = new WebSocket('ws://' + location.host + ':4000'), ee = new EventEmitter()) {
     // constructor(ws = new WebSocket('ws://localhost:4000'), ee = new EventEmitter()) {
         this.ws = ws;
         this.ee = ee;
         ws.onmessage = this.message.bind(this);
+        ws.onerror = this.error.bind(this);
         ws.onopen = this.open.bind(this);
         ws.onclose = this.close.bind(this);
     }
@@ -21,6 +22,11 @@ class Socket {
     emit(name, data) {
         const message = JSON.stringify({name, data});
         this.ws.send(message);
+    }
+
+    error(e) {
+        const er = JSON.parse(e.data);
+        console.log(er);
     }
 
     message(e) {
