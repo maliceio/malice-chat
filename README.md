@@ -12,4 +12,4 @@ $ cd malice-api
 $ docker-compose up -d
 ```
 
-Navigate to `http://$(docker-machine env malice)`
+Navigate to `http://$(docker-machine ip malice)`
