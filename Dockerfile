@@ -5,7 +5,8 @@ WORKDIR /go/src/github.com/maliceio/malice-api/
 
 RUN go get -u github.com/golang/dep/cmd/dep
 RUN dep ensure
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo \
+  -ldflags "-X main.Version=$(cat VERSION) -X main.BuildTime=$(date -u +%Y%m%d)" -o app .
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
