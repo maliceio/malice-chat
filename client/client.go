@@ -1,88 +1,54 @@
 package main
 
 import (
-	"log"
+	"errors"
+	"net/http"
+	"os"
+	"time"
 
-	r "github.com/dancannon/gorethink"
-	"github.com/gorilla/websocket"
+	"github.com/apex/log"
+	"github.com/apex/log/handlers/es"
+	"github.com/apex/log/handlers/multi"
+	"github.com/apex/log/handlers/text"
+	elastic "github.com/tj/go-elastic"
 )
 
-type FindHandler func(string) (Handler, bool)
-
-type Client struct {
-	send         chan Message
-	socket       *websocket.Conn
-	findHandler  FindHandler
-	session      *r.Session
-	stopChannels map[int]chan bool
-	id           string
-	userName     string
-}
-
-func (c *Client) NewStopChannel(stopKey int) chan bool {
-	c.StopForKey(stopKey)
-	stop := make(chan bool)
-	c.stopChannels[stopKey] = stop
-	return stop
-}
-
-func (c *Client) StopForKey(key int) {
-	if ch, found := c.stopChannels[key]; found {
-		ch <- true
-		delete(c.stopChannels, key)
+func main() {
+	esClient := elastic.New("http://elasticsearch:9200")
+	esClient.HTTPClient = &http.Client{
+		Timeout: 5 * time.Second,
 	}
-}
 
-func (client *Client) Read() {
-	var message Message
-	for {
-		if err := client.socket.ReadJSON(&message); err != nil {
-			break
+	e := es.New(&es.Config{
+		Client:     esClient,
+		BufferSize: 100,
+	})
+
+	t := text.New(os.Stderr)
+
+	log.SetHandler(multi.New(e, t))
+
+	ctx := log.WithFields(log.Fields{
+		"file": "something.png",
+		"type": "image/png",
+		"user": "tobi",
+	})
+
+	go func() {
+		for range time.Tick(time.Millisecond * 200) {
+			ctx.Info("upload")
+			ctx.Info("upload complete")
+			ctx.Warn("upload retry")
+			ctx.WithError(errors.New("unauthorized")).Error("upload failed")
+			ctx.Errorf("failed to upload %s", "img.png")
 		}
-		if handler, found := client.findHandler(message.Name); found {
-			handler(client, message.Data)
+	}()
+
+	go func() {
+		for range time.Tick(time.Millisecond * 25) {
+			ctx.Info("upload")
 		}
-	}
-	client.socket.Close()
-}
+	}()
 
-func (client *Client) Write() {
-	for msg := range client.send {
-		if err := client.socket.WriteJSON(msg); err != nil {
-			break
-		}
-	}
-	client.socket.Close()
-}
-
-func (c *Client) Close() {
-	for _, ch := range c.stopChannels {
-		ch <- true
-	}
-	close(c.send)
-	// delete user
-	r.Table("user").Get(c.id).Delete().Exec(c.session)
-}
-
-func NewClient(socket *websocket.Conn, findHandler FindHandler,
-	session *r.Session) *Client {
-	var user User
-	user.Name = "anonymous"
-	res, err := r.Table("user").Insert(user).RunWrite(session)
-	if err != nil {
-		log.Println(err.Error())
-	}
-	var id string
-	if len(res.GeneratedKeys) > 0 {
-		id = res.GeneratedKeys[0]
-	}
-	return &Client{
-		send:         make(chan Message),
-		socket:       socket,
-		findHandler:  findHandler,
-		session:      session,
-		stopChannels: make(map[int]chan bool),
-		id:           id,
-		userName:     user.Name,
-	}
+	select {}
 }

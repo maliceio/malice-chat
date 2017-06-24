@@ -2,28 +2,16 @@
 
 
 [[projects]]
-  name = "github.com/Sirupsen/logrus"
-  packages = ["."]
-  revision = "202f25545ea4cf9b191ff7f846df5d87c9382c2b"
-  version = "v1.0.0"
+  branch = "master"
+  name = "github.com/apex/log"
+  packages = [".","handlers/es","handlers/multi","handlers/text"]
+  revision = "8f3a15d95392c8fc202d1e1059f46df21dff2992"
 
 [[projects]]
   name = "github.com/appleboy/gin-jwt"
   packages = ["."]
   revision = "f7347d7c16fc8297bf5b7215b9e4847a5ca05d90"
   version = "v2.3.1"
-
-[[projects]]
-  name = "github.com/cenkalti/backoff"
-  packages = ["."]
-  revision = "32cd0c5b3aef12c76ed64aaf678f6c79736be7dc"
-  version = "v1.0.0"
-
-[[projects]]
-  name = "github.com/dancannon/gorethink"
-  packages = ["."]
-  revision = "7ab832f7b65573104a555d84a27992ae9ea1f659"
-  version = "v3.0.2"
 
 [[projects]]
   branch = "master"
@@ -44,18 +32,6 @@
   revision = "6a1fa9404c0aebf36c879bc50152edcc953910d2"
 
 [[projects]]
-  name = "github.com/gorilla/websocket"
-  packages = ["."]
-  revision = "3ab3a8b8831546bd18fd182c20687ca853b2bb13"
-  version = "v1.1.0"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/hailocab/go-hostpool"
-  packages = ["."]
-  revision = "e80d13ce29ede4452c43dea11e79b9bc8a15b478"
-
-[[projects]]
   branch = "master"
   name = "github.com/manucorporat/sse"
   packages = ["."]
@@ -68,22 +44,22 @@
   version = "v0.0.2"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/mitchellh/mapstructure"
+  name = "github.com/pkg/errors"
   packages = ["."]
-  revision = "d0303fe809921458f417bcf828397a65db30a7e4"
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
 
 [[projects]]
   branch = "master"
-  name = "golang.org/x/crypto"
-  packages = ["pbkdf2"]
-  revision = "adbae1b6b6fb4b02448a0fc0dbbc9ba2b95b294d"
+  name = "github.com/tj/go-elastic"
+  packages = ["batch"]
+  revision = "9a9a2a21e071e6e38f236740c3b650e7316ae67e"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "30f03014b4f11f9f238fdeca8cca734746a24fbb"
+  revision = "5f8847ae0d0e90b6a9dc8148e7ad616874625171"
 
 [[projects]]
   branch = "master"
@@ -98,22 +74,10 @@
   version = "v3.0.0"
 
 [[projects]]
-  branch = "v2.0.0"
-  name = "gopkg.in/fatih/pool.v2"
-  packages = ["."]
-  revision = "6e328e67893eb46323ad06f0e92cb9536babbabc"
-
-[[projects]]
   name = "gopkg.in/go-playground/validator.v8"
   packages = ["."]
   revision = "5f57d2222ad794d0dffb07e664ea05e2ee07d60c"
   version = "v8.18.1"
-
-[[projects]]
-  name = "gopkg.in/gorethink/gorethink.v3"
-  packages = ["encoding","ql2","types"]
-  revision = "7ab832f7b65573104a555d84a27992ae9ea1f659"
-  version = "v3.0.2"
 
 [[projects]]
   branch = "v2"
@@ -124,6 +88,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "3a844dc220c54294f88410cdc182c98b0a776e11ab0a27cbac4247a8543fe303"
+  inputs-digest = "76ca8097239a1486656b0bfe312696970bf394cba2bfde9634c34e6152f7767b"
   solver-name = "gps-cdcl"
   solver-version = 1
