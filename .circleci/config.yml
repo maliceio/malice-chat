@@ -52,7 +52,7 @@ jobs:
           name: Run tests
           command: |
             docker-compose -f ./docker-compose.ci.yml up -d; sleep 10
-            curl -XPOST 127.0.0.1:3333/login?username=admin&password=admin
+            curl --retry 10 --retry-delay 5 -v -XPOST 127.0.0.1:3333/login?username=admin&password=admin
       # - deploy:
       #     name: Push application Docker image
       #     command: |
