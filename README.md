@@ -9,10 +9,6 @@ Malice API
 
 -	[alpine (*3.97MB*\)](https://index.docker.io/_/alpine/)
 
-### Requirements
-
--	Docker
-
 ### Install
 
 ```bash
@@ -21,4 +17,4 @@ $ cd malice-api
 $ docker-compose up -d
 ```
 
-Navigate to `http://localhost:8080`
+Navigate to [http://localhost:3333](http://localhost:3333)
