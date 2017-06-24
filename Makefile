@@ -21,7 +21,7 @@ gotest:
 
 test:
 	docker-compose -f ./docker-compose.ci.yml up -d
-	http POST http://localhost:3333/login username=admin password=admin
+	docker-compose -f docker-compose.ci.yml run httpie http://api:3333/login username=admin password=admin
 
 clean:
 	docker-clean stop

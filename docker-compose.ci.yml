@@ -2,8 +2,7 @@ version: '3'
 services:
   elasticsearch:
     image: blacktop/elasticsearch
-
-  app:
+  api:
     build:
       context: .
     image: app
@@ -11,3 +10,9 @@ services:
       - "3333:3333"
     environment:
       - PORT=3333
+  httpie:
+    build:
+      context: .
+      dockerfile: Dockerfile.httpie
+    links:
+      - api
