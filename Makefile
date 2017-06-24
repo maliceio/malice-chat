@@ -25,6 +25,8 @@ test:
 
 clean:
 	docker-clean stop
+	docker rmi maliceapi_httpie
+	docker rmi $(REPO)/$(NAME)
 	docker rmi $(REPO)/$(NAME):$(VERSION)
 
 .PHONY: build dev size tags test gotest clean

@@ -51,8 +51,14 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/smartystreets/go-aws-auth"
+  packages = ["."]
+  revision = "8ef1316913ee4f44bc48c2456e44a5c1c68ea53b"
+
+[[projects]]
+  branch = "master"
   name = "github.com/tj/go-elastic"
-  packages = ["batch"]
+  packages = [".","aliases","batch"]
   revision = "9a9a2a21e071e6e38f236740c3b650e7316ae67e"
 
 [[projects]]
@@ -88,6 +94,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "76ca8097239a1486656b0bfe312696970bf394cba2bfde9634c34e6152f7767b"
+  inputs-digest = "6af09a72749aadc72f2b4e4140877a3b516fc485d0c1392200725e8db97c3a22"
   solver-name = "gps-cdcl"
   solver-version = 1
