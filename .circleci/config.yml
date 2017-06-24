@@ -48,10 +48,11 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
-      # - run:
-      #     name: Run tests
-      #     command: |
-      #       docker-compose -f ./docker-compose.ci.yml up
+      - run:
+          name: Run tests
+          command: |
+            docker-compose -f ./docker-compose.ci.yml up
+            curl -XPOST 127.0.0.1:3333/login?username=admin&password=admin
       # - deploy:
       #     name: Push application Docker image
       #     command: |
