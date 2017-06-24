@@ -90,7 +90,5 @@ func main() {
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
 	}
 
-	// http.ListenAndServe(":"+port, r)
-	// router.Run() // listen and serve on 0.0.0.0:8080
-	endless.ListenAndServe(":"+port, r)
+	endless.ListenAndServe(":"+port, r) // listen and serve on 0.0.0.0:8080
 }

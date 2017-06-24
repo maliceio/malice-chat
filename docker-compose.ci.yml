@@ -1,0 +1,13 @@
+version: '3'
+services:
+  elasticsearch:
+    image: blacktop/elasticsearch
+
+  app:
+    build:
+      context: .
+    image: app
+    ports:
+      - "3333:3333"
+    environment:
+      - PORT=3333

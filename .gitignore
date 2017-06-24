@@ -28,3 +28,4 @@ npm-debug.log
 
 .idea/
 web/bundle.js
+vendor

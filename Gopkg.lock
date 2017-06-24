@@ -2,10 +2,34 @@
 
 
 [[projects]]
+  name = "github.com/Sirupsen/logrus"
+  packages = ["."]
+  revision = "202f25545ea4cf9b191ff7f846df5d87c9382c2b"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/appleboy/gin-jwt"
   packages = ["."]
   revision = "f7347d7c16fc8297bf5b7215b9e4847a5ca05d90"
   version = "v2.3.1"
+
+[[projects]]
+  name = "github.com/cenkalti/backoff"
+  packages = ["."]
+  revision = "32cd0c5b3aef12c76ed64aaf678f6c79736be7dc"
+  version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/dancannon/gorethink"
+  packages = ["."]
+  revision = "7ab832f7b65573104a555d84a27992ae9ea1f659"
+  version = "v3.0.2"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/fvbock/endless"
+  packages = ["."]
+  revision = "447134032cb6a86814f570257390a379982dfc61"
 
 [[projects]]
   name = "github.com/gin-gonic/gin"
@@ -20,6 +44,18 @@
   revision = "6a1fa9404c0aebf36c879bc50152edcc953910d2"
 
 [[projects]]
+  name = "github.com/gorilla/websocket"
+  packages = ["."]
+  revision = "3ab3a8b8831546bd18fd182c20687ca853b2bb13"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/hailocab/go-hostpool"
+  packages = ["."]
+  revision = "e80d13ce29ede4452c43dea11e79b9bc8a15b478"
+
+[[projects]]
   branch = "master"
   name = "github.com/manucorporat/sse"
   packages = ["."]
@@ -30,6 +66,18 @@
   packages = ["."]
   revision = "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
   version = "v0.0.2"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/mitchellh/mapstructure"
+  packages = ["."]
+  revision = "d0303fe809921458f417bcf828397a65db30a7e4"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/crypto"
+  packages = ["pbkdf2"]
+  revision = "adbae1b6b6fb4b02448a0fc0dbbc9ba2b95b294d"
 
 [[projects]]
   branch = "master"
@@ -50,10 +98,22 @@
   version = "v3.0.0"
 
 [[projects]]
+  branch = "v2.0.0"
+  name = "gopkg.in/fatih/pool.v2"
+  packages = ["."]
+  revision = "6e328e67893eb46323ad06f0e92cb9536babbabc"
+
+[[projects]]
   name = "gopkg.in/go-playground/validator.v8"
   packages = ["."]
   revision = "5f57d2222ad794d0dffb07e664ea05e2ee07d60c"
   version = "v8.18.1"
+
+[[projects]]
+  name = "gopkg.in/gorethink/gorethink.v3"
+  packages = ["encoding","ql2","types"]
+  revision = "7ab832f7b65573104a555d84a27992ae9ea1f659"
+  version = "v3.0.2"
 
 [[projects]]
   branch = "v2"
@@ -64,6 +124,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "613d18f22093c99b8414a0e929520b28e4eecced6e041459676d892a7062d7d4"
+  inputs-digest = "3a844dc220c54294f88410cdc182c98b0a776e11ab0a27cbac4247a8543fe303"
   solver-name = "gps-cdcl"
   solver-version = 1
