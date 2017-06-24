@@ -7,6 +7,7 @@ import (
 	"github.com/appleboy/gin-jwt"
 	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
+	"github.com/maliceio/malice-api/api"
 )
 
 var (
@@ -18,12 +19,6 @@ var (
 // Token is an API key used for auth
 type Token struct {
 	Key string `form:"key" json:"key" binding:"required"`
-}
-
-func helloHandler(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"text": "Hello World.",
-	})
 }
 
 func getOpt(name, dfault string) string {
@@ -86,7 +81,7 @@ func main() {
 	auth := r.Group("/auth")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
-		auth.GET("/hello", helloHandler)
+		auth.GET("/hello", api.HelloHandler)
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
 	}
 

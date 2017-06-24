@@ -30,8 +30,8 @@ RUN apk --no-cache add -t .build-deps go git mercurial build-base \
   && go get -u github.com/golang/dep/cmd/dep \
   && dep ensure \
   && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo \
-    -ldflags "-X main.Version=$(cat VERSION) -X main.BuildTime=$(date -u +%Y%m%d)" -o /bin/app \
+    -ldflags "-X main.Version=$(cat VERSION) -X main.BuildTime=$(date -u +%Y%m%d)" -o /bin/api \
   && rm -rf /go \
   && apk del --purge .build-deps
 
-CMD ["app"]
+CMD ["api"]
